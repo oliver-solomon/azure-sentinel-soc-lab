@@ -36,15 +36,33 @@ Once my Windows virtual machine was running, I tested its logging by deliberatel
 
 ## 6. Create a Log Analytics Workspace
 
-I can then forward these logs into Azure where I can query and connect them into Microsoft Sentinel SIEM through Log Analytics Workspace
+I created a Log Analytics workspace to store the VM’s security logs so I could query them with KQL and investigate them using Microsoft Sentinel.
+
+<img width="1191" height="374" alt="Screenshot 2026-10-07 at 9 18 46 am" src="https://github.com/user-attachments/assets/9e4ab47e-89e0-43f5-86b7-56c4dc6e52e4" />
+
+## 7. Enable Microsoft Sentinel on the Log Analytics Workspace 
+
+I enabled Microsoft Sentinel on my Log Analytics workspace to prepare for monitoring and investigating the VM’s security logs.
+
+<img width="1505" height="243" alt="Screenshot 2026-10-07 at 9 25 23 am" src="https://github.com/user-attachments/assets/aa733455-717e-4d32-9324-bdb1a51deec8" />
+
+## 8. Connect Windows Security Event to Sentinel 
+
+I installed Windows Security Events from the Microsoft Sentinel Content Hub and configured the Windows Security Events via AMA data connector.
+
+I then created a Data Collection Rule (DCR) to collect Windows Security Event logs from the virtual machine and send them to my Log Analytics Workspace for analysis in Microsoft Sentinel.
+
+<img width="1134" height="672" alt="Screenshot 2026-10-07 at 9 54 54 am" src="https://github.com/user-attachments/assets/15127725-f10d-4377-bfbd-950050a9f202" />
+
+I confirmed that the Azure Monitor Agent (AMA) was installed on the virtual machine and showed “Provisioning succeeded."
+
+<img width="2048" height="962" alt="image" src="https://github.com/user-attachments/assets/fce96536-5604-4ae3-ba48-07090cac8abf" />
 
 
-## 7. Enable Microsoft Sentinel 
+## 9. Investigate Failed Logins Using KQL
 
+After configuring the Windows Security Events data connector, I used KQL (Kusto Query Language) in the Log Analytics Workspace to verify that security logs from the virtual machine were being successfully collected.
 
+I queried the SecurityEvent table and confirmed that events from my CORP-NET-EAST-1 virtual machine were appearing in the workspace.
 
-## 8. Connect Window Security Logs to Sentinel 
-
-
-
-## 9. Investigate Failed Logins Using KQL 
+<img width="2048" height="1303" alt="image" src="https://github.com/user-attachments/assets/41a0554b-5e2c-40ee-900b-25599e72d6c7" />
