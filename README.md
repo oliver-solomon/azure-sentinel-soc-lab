@@ -66,3 +66,25 @@ After configuring the Windows Security Events data connector, I used KQL (Kusto 
 I queried the SecurityEvent table and confirmed that events from my CORP-NET-EAST-1 virtual machine were appearing in the workspace.
 
 <img width="2048" height="1303" alt="image" src="https://github.com/user-attachments/assets/41a0554b-5e2c-40ee-900b-25599e72d6c7" />
+
+## 10. Import IP Geolocation Data as a Sentinel Watchlist 
+
+TO add geographic context to security events, I imported IP geolocation data into Microsoft Sentinel as a watch list.
+
+<img width="2048" height="515" alt="image" src="https://github.com/user-attachments/assets/3a0495a2-c459-4281-924d-b04ca0039a46" />
+
+## 11. Enrich Failed Login Logs with Geolocation Using KQL
+
+<img width="1736" height="1188" alt="image" src="https://github.com/user-attachments/assets/24f1f450-9ae4-4619-8942-196a19031496" />
+
+
+## 12. Create an Attack Map Using a Sentinel WorkBook
+
+## 13. Review Results and Document Findings 
+
+A. Investigate Failed Authentication Attempts
+
+After allowing the virtual machine to collect security events overtime, I queried Windows Event ID 4625 which represents as a failed logon attempts
+
+Using KQL, I identified
+## 14. Delete Lab Resources 
