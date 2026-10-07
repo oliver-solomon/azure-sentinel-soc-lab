@@ -73,18 +73,35 @@ TO add geographic context to security events, I imported IP geolocation data int
 
 <img width="2048" height="515" alt="image" src="https://github.com/user-attachments/assets/3a0495a2-c459-4281-924d-b04ca0039a46" />
 
-## 11. Enrich Failed Login Logs with Geolocation Using KQL
+I query "_GetWatchlist("geoip" to validate if the output is working 
 
 <img width="1736" height="1188" alt="image" src="https://github.com/user-attachments/assets/24f1f450-9ae4-4619-8942-196a19031496" />
 
+## 11. Enrich Failed Login Logs with Geolocation Using KQL
+
+I used KQL to enrich failed login attempts (Event ID 4625) with GeoIP data from my Sentinel watch list. This allowed me to identify the source IP address and its approximate geographic location 
+
+<img width="1690" height="1330" alt="image" src="https://github.com/user-attachments/assets/663292b8-f3c7-4ebc-a6ba-6e471c08be51" />
 
 ## 12. Create an Attack Map Using a Sentinel WorkBook
 
+I created a Microsoft Sentinel attack map to visualise the approximate locations and volume of failed login attempts using enriched GeoIP data.
+
+<img width="2048" height="907" alt="image" src="https://github.com/user-attachments/assets/c8c5e33d-b0b2-4071-9723-56cc835c39d5" />
+
 ## 13. Review Results and Document Findings 
 
-A. Investigate Failed Authentication Attempts
+**Finding 1: High-volume failed authentication activity**
 
-After allowing the virtual machine to collect security events overtime, I queried Windows Event ID 4625 which represents as a failed logon attempts
+
+
+**Finding 2: Top source IP + geolocation**
+
+
+**Finding 3: Check for successful access**
+
+
+After allowing the virtual machine to collect security events overtime, I queried Windows Event ID 4625 which represents as a failed logon attempts in which it output 
 
 Using KQL, I identified
 ## 14. Delete Lab Resources 
