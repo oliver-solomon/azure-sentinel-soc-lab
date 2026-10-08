@@ -1,0 +1,33 @@
+{
+  "type": 3,
+  "content": {
+    "version": "KqlItem/1.0",
+    "query": "// Adapted from the guided project: https://youtu.be/g5JL2RIbThM\n// Revised after the original screenshots; this revision has not been run in Azure.\n// Uses the workbook time range (default: last 24 hours), not a fixed historical interval.\n// Count original events first, then choose one GeoIP match per source IP.\n// The longest matching CIDR prefix is preferred; location remains approximate.\n// Equally specific conflicting matches may select either location, but cannot multiply counts.\n// Invalid/unmatched IPv4 addresses and missing/invalid coordinates are omitted from the map.\nlet GeoIPDB_FULL = _GetWatchlist(\"geoip\")\n| project network = tostring(network), latitude = todouble(latitude),\n          longitude = todouble(longitude), cityname = tostring(cityname),\n          countryname = tostring(countryname)\n| extend PrefixLength = coalesce(toint(split(network, \"/\")[1]), 32);\nSecurityEvent\n| where Computer =~ \"CORP-NET-EAST-1\"\n| where EventID == 4625\n| where isnotempty(IpAddress) and IpAddress != \"-\"\n| where isnotnull(parse_ipv4(IpAddress))\n| summarize FailureCount = count() by IpAddress\n| evaluate ipv4_lookup(GeoIPDB_FULL, IpAddress, network)\n| summarize arg_max(PrefixLength, *) by IpAddress\n| where latitude between (-90.0 .. 90.0) and longitude between (-180.0 .. 180.0)\n| project FailureCount, AttackerIp = IpAddress, latitude, longitude,\n          city = cityname, country = countryname,\n          friendly_location = strcat(cityname, \" (\", countryname, \")\")",
+    "size": 3,
+    "timeContext": {
+      "durationMs": 86400000
+    },
+    "queryType": 0,
+    "resourceType": "microsoft.operationalinsights/workspaces",
+    "visualization": "map",
+    "mapSettings": {
+      "locInfo": "LatLong",
+      "locInfoColumn": "country",
+      "latitude": "latitude",
+      "longitude": "longitude",
+      "sizeSettings": "FailureCount",
+      "sizeAggregation": "Sum",
+      "opacity": 0.8,
+      "labelSettings": "friendly_location",
+      "legendMetric": "FailureCount",
+      "legendAggregation": "Sum",
+      "itemColorSettings": {
+        "nodeColorField": "FailureCount",
+        "colorAggregation": "Sum",
+        "type": "heatmap",
+        "heatmapPalette": "greenRed"
+      }
+    }
+  },
+  "name": "query - 0"
+}
