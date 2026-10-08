@@ -23,7 +23,7 @@ I created a virtual machine to use as a honeypot, which I would later expose to 
 
 ## 4. Configure the Honeypot's Network and Firewall Settings 
 
-Configure the network security group and open it up to the internet
+I temporarily configured the Network Security Group (NSG) to allow inbound internet traffic for the honeypot experiment. This was an intentionally insecure configuration and is not recommended for production environments.
 
 <img width="1507" height="380" alt="Screenshot 2026-10-07 at 8 29 05 am" src="https://github.com/user-attachments/assets/a0bc4e80-63c2-471e-be61-8e4fc92856dc" />
 
@@ -110,7 +110,7 @@ Over the last 24 hours, Using KQL and my GeoIP watchlist, I identified that IP a
 
 <img width="2048" height="1226" alt="image" src="https://github.com/user-attachments/assets/8cf2cb7b-65bc-4ff9-82e7-a554f508419b" />
 
-**Data Quality Investigation:** I discovered that 172.216.11.33 matched two overlapping GeoIP ranges, explaining why the enriched query doubled the original 164 failed login events to 328. This highlighted the importance of validating enrichment results before drawing conclusions.
+**Data Quality Investigation:** **Data Quality Investigation:** I identified overlapping GeoIP watchlist ranges ("172.0.0.0/8" and "172.216.0.0/16") that caused duplicate enrichment matches for "172.216.11.33". As a result, 164 original failed login events appeared as 328 enriched results. Other enriched IP counts may also be affected by overlapping ranges, so these results should be validated before drawing conclusions.
 
 <img width="2047" height="646" alt="image" src="https://github.com/user-attachments/assets/40d7cfb7-927f-4592-aae0-d4ba652fc2c6" />
 
@@ -118,11 +118,11 @@ The high volume of failed login attempts across multiple IP addresses suggests p
 
 **Finding 3: Check for successful access**
 
-I investigated successful authentication events (Event ID 4624) to determine whether any suspicious logins occurred. Using KQL, I identified 7,172 service logons (type 5), one network logon (type 3) and one session unlock (type 7). 
+I investigated successful authentication events (Event ID 4624) to determine whether any suspicious logins occurred. Using KQL, I identified 7,172 service logons (Type 5), one network logon (Type 3) and one session unlock (Type 7). 
 
 <img width="2048" height="684" alt="image" src="https://github.com/user-attachments/assets/a390b07c-5a6f-4936-92c0-725dd000059c" />
 
-Further investigation revealed that the type 3 and type 7 events were associated with my own Windows account and occurred when I accessed the VM.
+Further investigation revealed that the Type 3 and Type 7 events were associated with my own Windows account and occurred when I accessed the VM.
 
 <img width="1620" height="971" alt="image" src="https://github.com/user-attachments/assets/e537c33e-1b57-4b7e-9839-5eff8d91cd28" />
 
@@ -135,6 +135,9 @@ No confirmed unauthorised access was identified during the investigation. The Ty
 
 ## 14. Delete Lab Resources 
 
-## 15. Key Takeaways 
+After completing the security investigations and saving the relevant screenshots and KQL queries, it's important to delete that I delete the OS-SOC-Lab resource group. This is to ensue that I clean up the temporary honeypot environment and prevent any unnecessary ongoing Azure Charges 
 
-## 16. Future Improvements 
+**Important** This removed the virtual machine, network resources, Log Analytics Workspace, Microsoft Sentinel configuration and other resources contained within the resource group 
+
+## 15. Key Takeaways 
+ 
