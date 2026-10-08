@@ -1,4 +1,7 @@
 # Microsoft Sentinel Home SOC Lab - Log Analysis and Threat Investigation
+## Acknowledgements
+
+This project was guided by a [Microsoft Sentinel SOC Lab YouTube tutorial](https://youtu.be/g5JL2RIbThM), with additional hands-on investigation, troubleshooting, and findings documented independently.
 
 ## 1. Create an Azure Account
 I created an Azure free account to use for this lab.
@@ -73,7 +76,7 @@ TO add geographic context to security events, I imported IP geolocation data int
 
 <img width="2048" height="515" alt="image" src="https://github.com/user-attachments/assets/3a0495a2-c459-4281-924d-b04ca0039a46" />
 
-I query "_GetWatchlist("geoip" to validate if the output is working 
+I queried the GeoIP watchlist using "_GetWatchlist("geoip")" to verify that the geographic data was successfully imported and could be retrieved using KQL.
 
 <img width="1736" height="1188" alt="image" src="https://github.com/user-attachments/assets/24f1f450-9ae4-4619-8942-196a19031496" />
 
@@ -97,7 +100,7 @@ I observed a high amount of failed authentication login activity (Event ID 4625)
 
 <img width="2048" height="1229" alt="image" src="https://github.com/user-attachments/assets/9c403476-d7d3-4a49-9b61-6cb3d38c6b5f" />
 
-The results showed that 'NOUSER' had the highest number of failed login events, with **6,292 attempts**, followed by "WORKGROUP\Administrator" with **1,585 attempts**. Several different account names also recorded **21 failed attempts** each, suggesting possible automated username guessing or brute-force activity.
+The results showed that "NOUSER", which may be a placeholder associated with failed OpenSSH authentication, had the highest number of failed login events at **6,292**, followed by "WORKGROUP\Administrator" with **1,585**. Several other account names recorded **21 failed attempts** each, suggesting possible automated username guessing or brute-force activity.
 
 The repeated attempts against administrator account suggest that potentially privileged account were being targeted
 
@@ -123,11 +126,15 @@ Further investigation revealed that the type 3 and type 7 events were associated
 
 <img width="1620" height="971" alt="image" src="https://github.com/user-attachments/assets/e537c33e-1b57-4b7e-9839-5eff8d91cd28" />
 
-
 Most Type 5 events were associated with Windows and OpenSSH services rather than confirmed user authentication. The OpenSSH logs also showed an invalid username attempting to connect, with the connection closed before authentication.
-
-No confirmed unauthorised access was identified during the investigation. The Type 3 and Type 7 logons were consistent with my own VM activity and session times, while OpenSSH logs showed unsuccessful authentication attempts. However, these findings do not completely rule out a compromise.
 
 <img width="1254" height="878" alt="image" src="https://github.com/user-attachments/assets/45c6dbae-2a39-46fe-8641-33a0220c2a35" />
 
+No confirmed unauthorised access was identified during the investigation. The Type 3 and Type 7 logons were consistent with my own VM activity and session times, while OpenSSH logs showed unsuccessful authentication attempts. However, these findings do not completely rule out a compromise.
+
+
 ## 14. Delete Lab Resources 
+
+## 15. Key Takeaways 
+
+## 16. Future Improvements 
