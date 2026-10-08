@@ -69,7 +69,7 @@ I queried the SecurityEvent table and confirmed that events from my CORP-NET-EAS
 
 ## 10. Import IP Geolocation Data as a Sentinel Watchlist 
 
-TO add geographic context to security events, I imported IP geolocation data into Microsoft Sentinel as a watch list.
+TO add geographic context to security events, I imported IP geolocation data into Microsoft Sentinel as a watchlist.
 
 <img width="2048" height="515" alt="image" src="https://github.com/user-attachments/assets/3a0495a2-c459-4281-924d-b04ca0039a46" />
 
@@ -93,15 +93,37 @@ I created a Microsoft Sentinel attack map to visualise the approximate locations
 
 **Finding 1: High-volume failed authentication activity**
 
+I observed a high amount of failed authentication login activity (Event ID 4625) on the Windows VM through querying with KQL.
 
+<img width="2048" height="1229" alt="image" src="https://github.com/user-attachments/assets/9c403476-d7d3-4a49-9b61-6cb3d38c6b5f" />
+
+The results showed that 'NOUSER' had the highest number of failed login events, with **6,292 attempts**, followed by "WORKGROUP\Administrator" with **1,585 attempts**. Several different account names also recorded **21 failed attempts** each, suggesting possible automated username guessing or brute-force activity.
+
+The repeated attempts against administrator account suggest that potentially privileged account were being targeted
 
 **Finding 2: Top source IP + geolocation**
 
+Over the last 24 hours, Using KQL and my GeoIP watchlist, I identified that IP address 45.202.0.25 geolocated to Zambia, recorded the highest number of failed login attempts at 889, followed by 103.57.254.252 geolocated to India, with 791 failed attempts.
+
+<img width="2048" height="1226" alt="image" src="https://github.com/user-attachments/assets/8cf2cb7b-65bc-4ff9-82e7-a554f508419b" />
+
+The high volume of failed login attempts across multiple IP addresses suggests possible automated attacks. Interestingly, three IP addresses geolocated to different countries each recorded exactly 396 failed attempts. This pattern warrants further investigation but does not prove coordinated activity.
 
 **Finding 3: Check for successful access**
 
+I investigated successful authentication events (Event ID 4624) to determine whether any suspicious logins occurred. Using KQL, I identified 7,172 service logons (type 5), one network logon (type 3) and one session unlock (type 7). 
 
-After allowing the virtual machine to collect security events overtime, I queried Windows Event ID 4625 which represents as a failed logon attempts in which it output 
+<img width="2048" height="684" alt="image" src="https://github.com/user-attachments/assets/a390b07c-5a6f-4936-92c0-725dd000059c" />
 
-Using KQL, I identified
+Further investigation revealed that the type 3 and type 7 events were associated with my own Windows account and occurred when I accessed the VM.
+
+<img width="1620" height="971" alt="image" src="https://github.com/user-attachments/assets/e537c33e-1b57-4b7e-9839-5eff8d91cd28" />
+
+
+Most Type 5 events were associated with Windows and OpenSSH services rather than confirmed user authentication. The OpenSSH logs also showed an invalid username attempting to connect, with the connection closed before authentication.
+
+No confirmed unauthorised access was identified during the investigation. The Type 3 and Type 7 logons were consistent with my own VM activity and session times, while OpenSSH logs showed unsuccessful authentication attempts. However, these findings do not completely rule out a compromise.
+
+<img width="1254" height="878" alt="image" src="https://github.com/user-attachments/assets/45c6dbae-2a39-46fe-8641-33a0220c2a35" />
+
 ## 14. Delete Lab Resources 
