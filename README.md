@@ -133,11 +133,27 @@ Most Type 5 events were associated with Windows and OpenSSH services rather than
 No confirmed unauthorised access was identified during the investigation. The Type 3 and Type 7 logons were consistent with my own VM activity and session times, while OpenSSH logs showed unsuccessful authentication attempts. However, these findings do not completely rule out a compromise.
 
 
-## 14. Delete Lab Resources 
+## 14. Cost Management + Lab Deletion
 
-After completing the security investigations and saving the relevant screenshots and KQL queries, it's important to delete that I delete the OS-SOC-Lab resource group. This is to ensue that I clean up the temporary honeypot environment and prevent any unnecessary ongoing Azure Charges 
+**Azure Cost Management**
+Before deleting the lab, I reviewed Azure Cost Management to monitor resource usage and expenses. The recorded cost was approximately AU$6.43 with most charges coming from virtual machine and storage.
+
+<img width="2048" height="655" alt="image" src="https://github.com/user-attachments/assets/5bb51e42-e382-403f-ac37-39412272c1ab" />
+
+After completing the security investigations and saving the relevant screenshots and KQL queries, I deleted the "OS-SOC-Lab" resource group to clean up the temporary honeypot environment and prevent unnecessary ongoing Azure charges.
+
 
 **Important** This removed the virtual machine, network resources, Log Analytics Workspace, Microsoft Sentinel configuration and other resources contained within the resource group 
 
-## 15. Key Takeaways 
- 
+## 15. Key Takeaways
+
+Through this Microsoft Sentinel SOC Lab, I gained hands-on experience in:
+
+- **Security Monitoring:** Collecting and analysing Windows security events using Microsoft Sentinel.
+- **KQL:** Querying logs to identify suspicious authentication activity and source IP addresses.
+- **Threat Investigation:** Investigating potential brute-force and automated authentication activity while distinguishing legitimate from suspicious logons.
+- **Data Validation:** Identifying duplicate GeoIP results and understanding the importance of accurate security data.
+- **Cloud Security:** Configuring Azure resources, security monitoring, and network security settings.
+
+**Biggest Takeaway:** Security analysis involves more than detecting threats. It requires investigating evidence, validating data, and drawing conclusions based on the available logs.
+
