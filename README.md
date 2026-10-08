@@ -107,6 +107,10 @@ Over the last 24 hours, Using KQL and my GeoIP watchlist, I identified that IP a
 
 <img width="2048" height="1226" alt="image" src="https://github.com/user-attachments/assets/8cf2cb7b-65bc-4ff9-82e7-a554f508419b" />
 
+**Data Quality Investigation:** I discovered that 172.216.11.33 matched two overlapping GeoIP ranges, explaining why the enriched query doubled the original 164 failed login events to 328. This highlighted the importance of validating enrichment results before drawing conclusions.
+
+<img width="2047" height="646" alt="image" src="https://github.com/user-attachments/assets/40d7cfb7-927f-4592-aae0-d4ba652fc2c6" />
+
 The high volume of failed login attempts across multiple IP addresses suggests possible automated attacks. Interestingly, three IP addresses geolocated to different countries each recorded exactly 396 failed attempts. This pattern warrants further investigation but does not prove coordinated activity.
 
 **Finding 3: Check for successful access**
