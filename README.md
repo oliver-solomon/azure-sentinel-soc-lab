@@ -142,6 +142,7 @@ Before deleting the lab, I reviewed Azure Cost Management to monitor resource us
 
 After completing the security investigations and saving the relevant screenshots and KQL queries, I deleted the "OS-SOC-Lab" resource group to clean up the temporary honeypot environment and prevent unnecessary ongoing Azure charges.
 
+<img width="1313" height="760" alt="Screenshot 2026-10-09 at 8 26 05 am" src="https://github.com/user-attachments/assets/0478c727-748d-43f9-bd0f-c28f7a97c2f8" />
 
 **Important** This removed the virtual machine, network resources, Log Analytics Workspace, Microsoft Sentinel configuration and other resources contained within the resource group 
 
